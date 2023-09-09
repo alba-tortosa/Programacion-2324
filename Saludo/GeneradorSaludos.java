@@ -13,7 +13,7 @@ public class GeneradorSaludos
      * clase GeneradorSaludos
      */
     public GeneradorSaludos()    {
-        mensaje = "Bienvenido/a al curso de programación \n" + 
+        mensaje = "Bienvenido/a al curso de programaciÃ³n \n" +
                    "orientada a objetos en Java utilizando BlueJ";
     }
 
