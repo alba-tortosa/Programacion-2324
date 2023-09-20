@@ -1,0 +1,102 @@
+@startuml
+class masanz.ut2.clases.Canvas {
+- {static} Canvas canvasSingleton
+- JFrame marco
+- CanvasPane canvas
+- Graphics2D grafico
+- Color fondoColor
+- Image canvasImagen
+- List<Object> objetos
+- HashMap<Object,DescripcionFigura> figuras
+- <<Create>> Canvas(String,int,int,Color)
++ {static} Canvas getCanvas()
++ void setVisible(boolean)
++ void dibujar(Object,String,Shape)
++ void borrar(Object)
++ void setFondoColor(String)
++ void esperar(int)
+- void redibujar()
+- void borrar()
+}
+class masanz.ut2.clases.Canvas$CanvasPane {
++ void paint(Graphics)
+}
+class masanz.ut2.clases.Canvas$DescripcionFigura {
+- Shape figura
+- String colorString
++ <<Create>> DescripcionFigura(Shape,String)
++ void dibujar(Graphics2D)
+}
+class masanz.ut2.clases.Circulo {
+- int diametro
+- int xPosicion
+- int yPosicion
+- String color
+- boolean esVisible
++ <<Create>> Circulo()
++ void hacerVisible()
++ void hacerInvisible()
++ void moverDerecha()
++ void moverIzquierda()
++ void moverArriba()
++ void moverAbajo()
++ void moverHorizontal(int)
++ void moverVertical(int)
++ void despacioMoverHorizontal(int)
++ void despacioMoverVertical(int)
++ void cambiarTamano(int)
++ void cambiarColor(String)
+- void dibujar()
+- void borrar()
+}
+class masanz.ut2.clases.Triangulo {
+- int altura
+- int ancho
+- int xPosicion
+- int yPosicion
+- String color
+- boolean esVisible
++ <<Create>> Triangulo()
++ void hacerVisible()
++ void hacerInvisible()
++ void moverDerecha()
++ void moverIzquierda()
++ void moverArriba()
++ void moverAbajo()
++ void moverHorizontal(int)
++ void moverVertical(int)
++ void despacioMoverHorizontal(int)
++ void despacioMoverVertical(int)
++ void cambiarTamano(int,int)
++ void cambiarColor(String)
+- void dibujar()
+- void borrar()
+}
+class masanz.ut2.clases.Cuadrado {
+- int tamano
+- int xPosicion
+- int yPosicion
+- String color
+- boolean esVisible
++ <<Create>> Cuadrado()
++ void hacerVisible()
++ void hacerInvisible()
++ void moverDerecha()
++ void moverIzquierda()
++ void moverArriba()
++ void moverAbajo()
++ void moverHorizontal(int)
++ void moverVertical(int)
++ void despacioMoverHorizontal(int)
++ void despacioMoverVertical(int)
++ void cambiarTamano(int)
++ void cambiarColor(String)
+- void dibujar()
+- void borrar()
+}
+
+
+masanz.ut2.clases.Canvas +.. masanz.ut2.clases.Canvas$CanvasPane
+masanz.ut2.clases.JPanel <|-- masanz.ut2.clases.Canvas$CanvasPane
+masanz.ut2.clases.Canvas +.. masanz.ut2.clases.Canvas$DescripcionFigura
+@enduml
