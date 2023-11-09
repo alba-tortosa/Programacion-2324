@@ -1,0 +1,16 @@
+º@startuml
+class Cuenta {
+- String identificador
+- double saldo
+- Persona titular
++ <<Create>> Cuenta(String,double,String)
+}
+class Persona {
+- String nombre
++ <<Create>> Persona(String)
+}
+
+Cuenta --> Persona
+
+
+@enduml
