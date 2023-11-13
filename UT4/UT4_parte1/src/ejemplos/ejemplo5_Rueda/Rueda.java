@@ -18,4 +18,12 @@ public class Rueda {
     public boolean estaDesinflada() {
         return (presion == 0.0);
     }
+
+    public double getPresion() {
+        return presion;
+    }
+
+    public String toString() {
+        return "Presion: " + this.presion;
+    }
 }
