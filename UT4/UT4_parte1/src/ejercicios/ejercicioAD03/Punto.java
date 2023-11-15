@@ -64,4 +64,24 @@ public class Punto {
         return str;
     }
 
+    public double getDistanciaDesdeOrigen(){
+        double resultado= Math.sqrt(Math.pow(x,2)+Math.pow(y,2));
+        return resultado;
+    }
+
+    public double getDistanciaDesdeOrigen2(){
+        double resultado = Math.pow(x,2)+Math.pow(y,2);
+        resultado= Math.sqrt(resultado);
+        return resultado;
+    }
+    public double getDistanciaDesdePunto(Punto p){
+        int x2=p.getX();
+        int y2=p.getY();
+        double aux1 = Math.pow(this.x - x2, 2);
+        double aux2 = Math.pow(this.y - y2, 2);
+
+        double resultado= Math.sqrt(aux1 + aux2);
+        return resultado;
+    }
+
 }
