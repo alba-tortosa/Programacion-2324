@@ -21,7 +21,7 @@ public class Cuenta {
     /**
      * mutador para el nº de cuenta
      *
-     * @param nuevoNumero el nuevo número de cuenta
+     * @param numero el nuevo número de cuenta
      */
     public void setnumero(int numero) {
         this.numero = numero;

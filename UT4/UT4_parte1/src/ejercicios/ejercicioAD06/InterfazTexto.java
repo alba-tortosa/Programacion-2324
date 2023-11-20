@@ -28,8 +28,31 @@ public class InterfazTexto {
      * Controla la lógica del objeto InterfazTexto
      */
     public void iniciar() {
+        int numero = this.leerNumeroCuenta();
+        String nombre = this.leerTitular();
+        cuenta = new Cuenta(numero, nombre);
+        int opcion = this.menu();
 
-        borrarPantalla();
+        while (opcion != SALIR) {
+            switch (opcion) {
+                case INGRESO:
+                    realizarIngreso();
+                    break;
+                case REINTEGRO:
+                    realizarReintegro();
+                    break;
+                case CONSULTA:
+                    consultarSaldo();
+                    break;
+                case IMPRIMIR:
+                    imprimirDatosCuenta();
+                    break;
+                default:
+                    System.out.println("No ha escogido una opción válida.");
+            }
+
+            opcion = menu();
+        }
 
     }
 
@@ -37,8 +60,10 @@ public class InterfazTexto {
      *  pedir nº cuenta y devolverlo
      */
     private int leerNumeroCuenta() {
-
-        return 0;
+        System.out.println("Introduzca un numero de cuenta:");
+        int numero = teclado.nextInt();
+        teclado.nextLine();
+        return numero;
 
     }
 
@@ -46,37 +71,42 @@ public class InterfazTexto {
      *  pedir titular y devolverlo
      */
     private String leerTitular() {
-
-        return null;
-
+        System.out.println("Introduzca el nombre del titular:");
+        String nombre = teclado.nextLine();
+        return nombre;
     }
 
     /**
      * pedir cantidad de ingreso e ingresar
      */
     private void realizarIngreso() {
-
+        System.out.println("Introduzca un cantidad:");
+        double cantidad = teclado.nextDouble();
+        cuenta.ingresar(cantidad);
     }
 
     /**
      * pedir cantidad y reintegrar
      */
     private void realizarReintegro() {
-
+        System.out.println("Introduzca un cantidad:");
+        double cantidad = teclado.nextDouble();
+        cuenta.reintegrar(cantidad);
     }
 
     /**
      * Mostrar saldo de la cuenta
      */
     private void consultarSaldo() {
-
+        System.out.println(cuenta.getSaldo());
     }
 
     /**
      * mostrar datos de la cuenta
      */
     private void imprimirDatosCuenta() {
-
+        System.out.println(cuenta);
+        //System.out.println(cuenta.toString());
     }
 
     /**
