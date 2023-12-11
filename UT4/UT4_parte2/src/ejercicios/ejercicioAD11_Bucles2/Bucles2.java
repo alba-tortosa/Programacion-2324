@@ -1,5 +1,6 @@
 package ejercicios.ejercicioAD11_Bucles2;
 
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -19,6 +20,16 @@ public class Bucles2 {
      */
     public static void impares1a100() {
 
+        int contadorLinea = 1;
+        for (int i = 1; i <= 100; i+=2) {
+            System.out.printf("%3d", i);
+            //System.out.print(i);
+            if(contadorLinea == 8) {
+                System.out.printf("\n");
+                contadorLinea = 0;
+            }
+            contadorLinea++;
+        }
     }
 
     /**
@@ -26,7 +37,9 @@ public class Bucles2 {
      * (con for) -
      */
     public static void multiplos(int n) {
-
+        for (int i = 1; i < 11; i++) {
+            System.out.println(n*i);
+        }
     }
 
     /**
@@ -36,8 +49,15 @@ public class Bucles2 {
      * El 1 no es un nº primo
      */
     public static boolean esPrimo(int n) {
-
-        return false;
+        if (n == 1) return false;
+        int divisor = 2;
+        while (divisor < n) {
+            if (n % divisor == 0) {
+                return false;
+            }
+            divisor++;
+        }
+        return true;
     }
 
     /**
@@ -48,8 +68,19 @@ public class Bucles2 {
      * Con while
      */
     public static int primoCercano(int n) {
+        int primoAbajo = n;
+        int primoArriba = n;
+        while (!esPrimo(primoAbajo)){
+            primoAbajo--;
+        }
+        while (!esPrimo(primoArriba)){
+            primoArriba++;
+        }
+        int diferenciaAbajo = n - primoAbajo;
+        int diferenciaArriba = primoArriba - n;
 
-        return 0;
+        if (diferenciaAbajo < diferenciaArriba) return primoAbajo;
+        else return primoArriba;
 
     }
 
@@ -61,6 +92,16 @@ public class Bucles2 {
      */
     public static void primos(int n) {
 
+        int numero = 2;
+        int contadorPrimos = 0;
+        while(contadorPrimos < n) {
+            if (esPrimo(numero)) {
+                //System.out.println(numero);
+                System.out.printf("%3d", numero);
+                contadorPrimos++;
+            }
+            numero++;
+        }
     }
 
     /**
@@ -86,21 +127,40 @@ public class Bucles2 {
      */
     public static void grafico() {
 
+        Random generador = new Random();
+        int numero = generador.nextInt(51);
+        while (numero != 0) {
+//            System.out.print(numero);
+            for (int i = 0; i < numero; i++) {
+                System.out.print("X");
+            }
+            System.out.println();
+            numero = generador.nextInt(51);
+        }
     }
 
     /**
      * G. Escribe los números entre ALTO y BAJO que
      * son múltiplos de 4 pero no de 5 (con for)
      */
-    public static void multiplos() {
+    void multiplos() {
         final int ALTO = 40;
         final int BAJO = 2;
+
+        for (int i = BAJO; i <= ALTO; i++) {
+            if(i%4 == 0 && i%5 != 0){
+                System.out.println(i);
+            }
+
+//            if(i%4 == 0 && !(i%5 == 0)){
+//                System.out.println(i);
+//            }
+        }
 
     }
 
     /**
      * H. Escribe la siguiente figura para 10 filas y 8 columnas (con for)
-     * <p>
      * ########
      * ########
      * ########
@@ -113,7 +173,14 @@ public class Bucles2 {
      * ########
      */
     public static void figura1() {
+        for (int i = 0; i <10 ; i++) {
+//            for (int j = 0; j <8 ; j++) {
+//                System.out.print(ALMOHADILLA);
+//            }
+//            System.out.println();
 
+            System.out.println("#".repeat(8));
+        }
     }
 
     /**
@@ -121,8 +188,15 @@ public class Bucles2 {
      * (con while)
      */
     public static int contarApariciones(int numero, int cifra) {
+        int apariciones=0;
+        while (numero!=0){
+            if (numero%10 ==cifra) {
+                apariciones++;
+            }
+            numero=numero/10;
 
-        return 0;
+        }
+        return apariciones;
 
     }
 
@@ -131,14 +205,15 @@ public class Bucles2 {
      * (con for) - Usa la constante adecuada
      */
     public static void escribirGuiones(int n) {
-
+        for (int i = 0; i < n ; i++) {
+            System.out.print(GUION);
+        }
     }
 
     /**
      * K. Escribe la siguiente figura
      * (con for) - utiliza el método escribirGuiones()
      * usa las constantes adecuadas
-     * <p>
      * *
      * -*
      * --*
@@ -147,7 +222,10 @@ public class Bucles2 {
      * -----*
      */
     public static void figura2(int filas) {
-
+        for (int i = 0; i < filas; i++) {
+            escribirGuiones(i);
+            System.out.println(ASTERISCO);
+        }
     }
 
     /**
@@ -167,7 +245,11 @@ public class Bucles2 {
      * 2 elevado a 10 es 1024
      */
     public static void potencias() {
-
+        for (int i = 0; i <= 10; i++){
+            int numeroPotenciado = (int) Math.pow(2,i);
+//            long numeroPotenciado = Math.round(Math.pow(2,i));
+            System.out.printf("2 elevado a %d es %d\n", i, numeroPotenciado);
+        }
     }
 
     /**
@@ -185,6 +267,13 @@ public class Bucles2 {
      * 8   3   4   5   6   7
      */
     public static void printCuadrado(int inicio, int fin) {
+
+        for (int i = inicio; i <= fin; i++) {
+            System.out.println(i);
+            for (int j = i; j < ; j++) {
+
+            }
+        }
 
     }
 
