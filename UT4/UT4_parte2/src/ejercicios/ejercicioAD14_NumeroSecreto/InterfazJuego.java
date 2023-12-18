@@ -14,7 +14,8 @@ public class InterfazJuego {
      * Constructor de la clase InterfazJuego
      */
     public InterfazJuego() {
-
+        this.teclado = new Scanner(System.in);
+        this.juego = new JuegoNumeroSecreto();
     }
 
 
@@ -29,6 +30,20 @@ public class InterfazJuego {
      */
     public void jugar() {
 
+        char respuesta = seguirJugando("¿Quieres jugar? (S/N)");
+
+        while(respuesta == 'S') {
+            presentacionJuego();
+            juego.resetJuego();
+
+            //a jugar
+            while(!juego.haTerminado()) {
+                juego.realizarJugada(leerNumero());
+                System.out.println(juego.getResultado());
+            }
+            respuesta = seguirJugando("¿Quieres volver a jugar? (S/N)");
+        }
+
     }
 
     /**
@@ -37,27 +52,19 @@ public class InterfazJuego {
      * @return el numero tecleado
      */
     private int leerNumero() {
-
-        return 0;
+        System.out.println("Piensa un nº");
+        return teclado.nextInt();
     }
 
     /**
      * Mensaje de bienvenida al juego
      */
     private void presentacionJuego() {
-        borrarPantalla();
         System.out.println("*************************************************************");
         System.out.println("     Para jugar piensa un numero entre 1 y 100   ");
         System.out.println("     Has de adivinar un numero secreto en  " + juego.getMaximoIntentos() + " intentos    " +
                 "    " + "  ");
         System.out.println("*************************************************************");
-    }
-
-    /**
-     * Borrar la pantalla
-     */
-    private void borrarPantalla() {
-        System.out.print('\u000C');
     }
 
     /**
@@ -67,6 +74,7 @@ public class InterfazJuego {
      * @return un caracter solicitado al usuario
      */
     private char seguirJugando(String mensaje) {
-        return 0;
+        System.out.println(mensaje);
+        return teclado.next().charAt(0);
     }
 }

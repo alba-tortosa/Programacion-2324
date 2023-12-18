@@ -268,12 +268,12 @@ public class Bucles2 {
      */
     public static void printCuadrado(int inicio, int fin) {
 
-        for (int i = inicio; i <= fin; i++) {
-            System.out.println(i);
-            for (int j = i; j < ; j++) {
-
-            }
-        }
+//        for (int i = inicio; i <= fin; i++) {
+//            System.out.println(i);
+//            for (int j = i; j < ; j++) {
+//
+//            }
+//        }
 
     }
 
@@ -287,13 +287,13 @@ public class Bucles2 {
 
      */
 
-    public void printTriangulo(int n) {
+    public static void printTriangulo(int n) {
 
     }
 
 
     // O. Escribe la tabla de multiplicar de l 1, del 2, del 3, .... hasta la tabla de "numero"
-    public void escribirTablasMultiplicar(int numero) {
+    public static void escribirTablasMultiplicar(int numero) {
 
     }
 

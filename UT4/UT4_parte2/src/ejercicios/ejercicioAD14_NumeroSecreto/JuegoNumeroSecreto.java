@@ -8,7 +8,7 @@ import java.util.Random;
  */
 
 public class JuegoNumeroSecreto {
-    private final int MAX_INTENTOS = 5;
+    private static final int MAX_INTENTOS = 5;
     private int numeroSecreto;
     private Contador intentos;
     private boolean terminado;
@@ -21,7 +21,9 @@ public class JuegoNumeroSecreto {
      * el juego para empeazr a jugar (llama a resrJuego())
      */
     public JuegoNumeroSecreto() {
-
+        this.intentos = new Contador();
+        this.generador = new Random();
+        //resetJuego();
     }
 
     /**
@@ -30,14 +32,17 @@ public class JuegoNumeroSecreto {
      * etc, .......
      */
     public void resetJuego() {
-
+        intentos.reset();
+        this.terminado = false;
+        this.numeroSecreto = generador.nextInt(1, 101);
+        this.resultado = "";
     }
 
     /**
      * Accesor para el numero de intentos
      */
     public int getIntentos() {
-        return 0;
+        return intentos.getContador();
     }
 
 
@@ -54,7 +59,7 @@ public class JuegoNumeroSecreto {
      */
 
     public void incrementarIntentos() {
-
+        intentos.incrementar();
     }
 
     /**
@@ -68,7 +73,22 @@ public class JuegoNumeroSecreto {
      * @param intentado el numero intentado
      */
     public void realizarJugada(int intentado) {
+        incrementarIntentos();
 
+        if (getIntentos() == MAX_INTENTOS || intentado == this.numeroSecreto) {
+            this.terminado = true;
+            if (intentado == this.numeroSecreto) {
+                this.resultado = "Has acertado el numero";
+            } else {
+                this.resultado = "Lo siento, has agotado los " + MAX_INTENTOS + " intentos";
+            }
+        } else {
+            if (intentado > this.numeroSecreto) {
+                this.resultado = "Más bajo";
+            } else if (intentado < this.numeroSecreto) {
+                this.resultado = "Más alto";
+            }
+        }
     }
 
     /**

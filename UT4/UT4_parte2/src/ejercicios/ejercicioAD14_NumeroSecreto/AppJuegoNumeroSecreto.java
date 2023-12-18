@@ -10,5 +10,8 @@ public class AppJuegoNumeroSecreto {
      */
     public static void main(String[] args) {
 
+        InterfazJuego interfaz = new InterfazJuego();
+        interfaz.jugar();
+
     }
 }
