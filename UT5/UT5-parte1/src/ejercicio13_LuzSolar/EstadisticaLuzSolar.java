@@ -5,7 +5,7 @@ package ejercicio13_LuzSolar;
  */
 public class EstadisticaLuzSolar {
     // define una constante MESES que es un array con los nombres de los meses
-
+    private static final String[] MESES= {"ENERO", "FEBRERO", "MARZO", "ABRIL" , "MAYO" , "JUNIO","JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE" , "NOVIEMBRE" , "DICIEMBRE"};
 
     // define un array horas
     private int[] horas;
@@ -23,8 +23,13 @@ public class EstadisticaLuzSolar {
      * @return la media de horas de sol
      */
     public double getMediaSol() {
+        double suma = 0;
 
-        return 0;
+        for (double h : horas) {
+            suma += h;
+        }
+        return suma / horas.length;
+
     }
 
     /**
@@ -33,8 +38,15 @@ public class EstadisticaLuzSolar {
      * @return el nombre del mes
      */
     public String mesMasSoleado() {
-
-        return null;
+        int max = Integer.MIN_VALUE;
+        String masSoleado = "";
+        for (int i = 0; i < horas.length; i++) {
+            if(max < horas[i]){
+                max = horas[i];
+                masSoleado = MESES[i];
+            }
+        }
+        return masSoleado;
     }
 
     /**
@@ -43,7 +55,14 @@ public class EstadisticaLuzSolar {
      * @return el nombre del mes
      */
     public String mesMenosSoleado() {
-
-        return null;
+        int min = Integer.MAX_VALUE;
+        String menosSoleado = "";
+        for (int i = 0; i < horas.length; i++) {
+            if(min > horas[i]){
+                min = horas[i];
+                menosSoleado = MESES[i];
+            }
+        }
+        return menosSoleado;
     }
 }

@@ -4,7 +4,7 @@ public class ContadorDias {
     private int[] diasMes;
 
     public ContadorDias() {
-
+        diasMes = new int[] {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     }
 
     /**
@@ -17,8 +17,15 @@ public class ContadorDias {
      */
 
     public int contarDias(int dia, int mes, int año) {
+        int suma = 0;
+        for (int i = 0; i < mes-1; i++) {
+            suma += diasMes[i];
+            if (i==1 && esBisiesto(año)) suma++;
+        }
+        suma+=dia;
+        //if (mes > 2 && esBisiesto(año)) suma++;
 
-        return 0;
+        return suma;
 
     }
 
