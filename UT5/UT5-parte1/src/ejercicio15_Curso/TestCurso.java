@@ -1,22 +1,24 @@
 package ejercicio15_Curso;
 
+import java.util.Arrays;
+
 public class TestCurso {
 
     public static void main(String[] args) {
         Curso curso = new Curso();
         curso.escribir();
-        // double[] mediasPorAlumno = curso.calcularMediaPorAlumno();
-        // System.out.println("Media por alumno");
-        // System.out.println(Arrays.toString(mediasPorAlumno));
-        // double[] mediasPorAsignatura = curso.calcularMediaPorAsignatura();
-        // System.out.println("Media por asignatura");
-        // System.out.println(Arrays.toString(mediasPorAsignatura));
-        // int alumno = 7;
-        // System.out.println("Suspensos del alumno " + alumno
-        // + " = " + curso.suspensosDelAlumno(alumno));
-        // int asignatura = 4;
-        // System.out.println("Aprobados en asignatura " + asignatura +
-        // " = " + curso.aprobadosEnAsignatura(asignatura));
+         double[] mediasPorAlumno = curso.calcularMediaPorEstudiante();
+         System.out.println("Media por alumno");
+         System.out.println(Arrays.toString(mediasPorAlumno));
+         double[] mediasPorAsignatura = curso.calcularMediasPorAsignaturaColumnas();
+         System.out.println("Media por asignatura");
+         System.out.println(Arrays.toString(mediasPorAsignatura));
+         int alumno = 7;
+         System.out.println("Suspensos del alumno " + alumno
+         + " = " + curso.suspensosDelAlumno(alumno));
+         int asignatura = 4;
+         System.out.println("Aprobados en asignatura " + asignatura +
+         " = " + curso.aprobadosEnAsignatura(asignatura));
 
         // System.out.println("Ejemplo array desigual (ragged) ");
         // char[][] ragged = Curso.ejemploRagged();
