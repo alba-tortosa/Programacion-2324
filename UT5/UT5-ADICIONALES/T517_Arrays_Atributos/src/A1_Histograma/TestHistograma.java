@@ -12,7 +12,10 @@ public class TestHistograma {
      */
     public static void main(String[] args) {
         Histograma histograma = new Histograma();
+
         histograma.escribirHistograma();
+        System.out.println("-".repeat(60));
+        histograma.escribirHistograma2();
 
         System.out.println();
         System.out.println("Valores del array V1 " + Arrays.toString(histograma.getValoresV1()));
