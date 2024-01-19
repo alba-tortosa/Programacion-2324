@@ -19,8 +19,8 @@ public class InterfazDiccionario {
      * Crea e inicializa adecuadamente los atributos
      */
     public InterfazDiccionario(Diccionario diccionario) {
-        // TODO
-
+        this.diccionario = diccionario;
+        this.teclado = new Scanner(System.in);
     }
 
     /**
@@ -29,9 +29,12 @@ public class InterfazDiccionario {
      */
     public void iniciar() {
         int opcion = menu();
-        while (true) {
-
-
+        while (opcion != SALIR) {
+            switch (opcion){
+                case AÑADIR -> añadirPalabra();
+                case MOSTRAR -> mostrarDiccionario();
+                case TRADUCIR -> traducirPalabra();
+            }
             opcion = menu();
         }
     }
@@ -73,15 +76,20 @@ public class InterfazDiccionario {
      */
     private void añadirPalabra() {
         teclado.nextLine(); //limpiar el buffer
-        // TODO
-
+        System.out.println("Di la palabra en español y luego en ingles");
+        System.out.print("Español: ");
+        String esp = teclado.next();
+        System.out.print("Ingles: ");
+        String eng = teclado.next();
+        Palabra p = new Palabra(esp, eng);
+        diccionario.insertarPalabra(p);
     }
 
     /**
      * Mostrar el diccioanrio
      */
     private void mostrarDiccionario() {
-        // TODO
+        diccionario.escribirDiccionario();
 
     }
 
@@ -90,7 +98,8 @@ public class InterfazDiccionario {
      */
     private void traducirPalabra() {
         teclado.nextLine(); //limpiar el buffer
-        // TODO
+        System.out.print("Dime la posicion de la palabra que deseas añadir:");
+        System.out.println(diccionario.traducirPalabra(teclado.nextInt()));
 
     }
 

@@ -13,8 +13,8 @@ public class AppDiccionario
      *  
      */
     public static void main(String[] args)   {
-          
-        
-        
+          Diccionario diccionario =  new Diccionario(4);
+          InterfazDiccionario interfaz = new InterfazDiccionario(diccionario);
+          interfaz.iniciar();
     }
 }

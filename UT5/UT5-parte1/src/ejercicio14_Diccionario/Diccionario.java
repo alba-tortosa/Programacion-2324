@@ -18,15 +18,24 @@ public class Diccionario
      * que guardara el diccionario
      */
     public Diccionario(int numPalabras)   {
-
+        listaPalabras=new Palabra[Math.min(numPalabras, MAX_PALABRAS)];
+        pos = 0;
+//        if (numPalabras>MAX_PALABRAS){
+//            listaPalabras=new Palabra[MAX_PALABRAS];
+//        }else listaPalabras= new Palabra[numPalabras];
     }
 
     /**
-     * 
+     *
      * @param nuevaPalabra la palabra a añadir
      */
     public void insertarPalabra(Palabra nuevaPalabra)   {
-
+        if (pos<listaPalabras.length){
+            listaPalabras[pos]=nuevaPalabra;
+            pos++;
+        } else {
+            System.out.println("No caben más palabras en el diccionario.");
+        }
     }
     /**
      * @param posicion la posicion de la palabra
@@ -34,8 +43,12 @@ public class Diccionario
      * @return la palabra de posicion
      */
     public Palabra obtenerPalabra(int posicion)   {
-
-        return null;
+        if (posicion>0 && posicion<=pos){
+            Palabra palabra = listaPalabras[posicion-1];
+            return palabra;
+        }else{
+            return null;
+        }
     }
 
     /**
@@ -45,7 +58,23 @@ public class Diccionario
      *          de posicion
      */
     public String traducirPalabra(int posicion)   {
-        return null;
+        String resultado = "";
+        if (posicion>0 && posicion<=pos) {
+            Palabra palabra = listaPalabras[posicion-1];
+            resultado = palabra.getIngles();
+        } else {
+            resultado = "No hay ninguna palabra en esa posición.";
+        }
+        return resultado;
+    }
+
+    public String traducirPalabra2(int posicion)   {
+        String resultado = "";
+        Palabra palabra = obtenerPalabra(posicion);
+        if (palabra != null) {
+            resultado = palabra.getIngles();
+        }
+        return resultado;
     }
 
     /**
@@ -59,8 +88,27 @@ public class Diccionario
      * Representacion textual del diccionario
      */
     public String toString()   {
+        String toString="-".repeat(27) + "\n";
+        toString += String.format("| %10s | %10s |\n", "CASTELLANO", "INGLÉS");
+        for (Palabra listaPalabra : listaPalabras) {
+            if (listaPalabra != null) {
+                toString += "-".repeat(27) + "\n";
+                toString += String.format("| %10s | %10s |\n", listaPalabra.getCastellano(), listaPalabra.getIngles());
+            }
+        }
+        toString += "-".repeat(27) + "\n";
+        return toString;
+    }
 
-        return null;
+    public String toString2()   {
+        String toString="-".repeat(27) + "\n";
+        toString += String.format("| %10s | %10s |\n", "CASTELLANO", "INGLÉS");
+        for (int i = 0; i < pos; i++) {
+            toString += "-".repeat(27) + "\n";
+            toString += String.format("| %10s | %10s |\n", listaPalabras[i].getCastellano(), listaPalabras[i].getIngles());
+        }
+        toString += "-".repeat(27) + "\n";
+        return toString;
     }
 
 }
