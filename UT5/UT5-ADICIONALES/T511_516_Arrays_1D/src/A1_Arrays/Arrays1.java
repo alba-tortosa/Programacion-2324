@@ -12,15 +12,21 @@ public class Arrays1 {
      * (no hay que invertir el array)
      */
     public static void escribirInvertido(int[] numeros) {
-
+        for (int i = numeros.length - 1; i >= 0; i--) {
+            System.out.print(numeros[i] + " ");
+        }
     }
 
     /**
      * 2. Dado un nº devuelve la suma de sus cifras
      */
     private static int sumarCifras(int n) {
-
-        return 0;
+        int auxiliar = 0;
+        while (n!=0) {
+            auxiliar += n%10;
+            n /= 10;
+        }
+        return auxiliar;
     }
 
     /**
@@ -37,7 +43,17 @@ public class Arrays1 {
      * Hay que usar el método privado sumarCifras()
      */
     public static void sumarCifrasLista(int[] numeros) {
+        for (int i = 0; i < numeros.length; i++) {
+            int suma = sumarCifras(numeros[i]);
+            System.out.printf("%d - %d\n", numeros[i], suma);
+        }
+    }
 
+    public static void sumarCifrasListaV2(int[] numeros) {
+        for (int numero : numeros) {
+            int suma = sumarCifras(numero);
+            System.out.printf("%d - %d\n", numero, suma);
+        }
     }
 
 
@@ -48,7 +64,21 @@ public class Arrays1 {
      * al final queda {25, 49, 144, 81, 9, 4}
      */
     public static void listadoAlCuadrado(int[] numeros) {
+        int f=numeros[0];
+        for (int i =0; i <= numeros.length-1; i++) {
+            numeros[i]=numeros[i+1]*numeros[i+1];
+        }
+        numeros[numeros.length-1]=f*f;
+        System.out.println(Arrays.toString(numeros));
+    }
 
+    public static void listadoAlCuadradoV2(int[] numeros) {
+        int f=numeros[0];
+        for (int i =1; i < numeros.length; i++) {
+            numeros[i-1]= (int) Math.pow(numeros[i],2);
+        }
+        numeros[numeros.length-1]=f*f;
+        System.out.println(Arrays.toString(numeros));
     }
 
     /**
@@ -65,7 +95,13 @@ public class Arrays1 {
      * se devuelve {-1, -1, -1, -1, -1, -1}
      */
     public static int[] sublistaOrdenada(int[] numeros, int a, int b) {
-
-        return null;
+        if (a < 0 || b >= numeros.length || a > b) {
+            int[] incorrecto = new int[numeros.length];
+            Arrays.fill(incorrecto, -1);
+            return incorrecto;
+        }
+        int[] lista = Arrays.copyOfRange(numeros, a, b + 1);
+        Arrays.sort(lista);
+        return lista;
     }
 }

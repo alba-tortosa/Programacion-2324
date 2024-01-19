@@ -30,7 +30,7 @@ public class TestArrays1 {
 
         System.out.println("\n----------- listadoAlCuadrado() ---------------");
         numeros = new int[]{2, 5, 7, 12, 9, 3};
-        Arrays1.listadoAlCuadrado(numeros);
+        Arrays1.listadoAlCuadradoV2(numeros);
 
         separador();
 
