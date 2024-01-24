@@ -1,5 +1,8 @@
 package A1_Arrays_1;
 
+import java.util.Arrays;
+import java.util.Random;
+
 /**
  * Clase que guarda un array bidimensional
  * y permite hacer ciertas operaciones sobre él
@@ -13,7 +16,10 @@ public class Array2D {
      * Constructor
      */
     public Array2D() {
-        matriz = new int[][]{{1, 2, 3, 4}, {14, 5, 26, 7}, {17, 8, 19, 10}, {10, 11, 12, 13}};
+        matriz = new int[][]{{1, 2, 3, 4},
+                {14, 5, 26, 7},
+                {17, 8, 19, 10},
+                {10, 11, 12, 13}};
     }
 
     /**
@@ -23,9 +29,11 @@ public class Array2D {
      * @param columnas nº de columnas del array
      */
     public Array2D(int filas, int columnas) {
+        if (filas < 1 && columnas < 1) {
+            throw new IllegalArgumentException("La matriz debe tener mínimo 2 filas y dos columnas");
+        }
         matriz = new int[filas][columnas];
-
-
+        inicializar();
     }
 
     /**
@@ -33,36 +41,48 @@ public class Array2D {
      * Usa el mutador setValor
      */
     public void inicializar() {
-
-    }
-
-    /**
-     * @return el nº total de filas de la matriz
-     */
-    public int getFilas() {
-        return 0;
-    }
-
-    /**
-     * @return el nº total de columnas de la matriz
-     */
-    public int getColumnas() {
-        return 0;
+        Random r = new Random();
+        for (int i = 0; i < getFilas(); i++) {
+            for (int j = 0; j < getColumnas(); j++) {
+                setValor(i, j, r.nextInt(3,31));
+            }
+        }
     }
 
     /**
      * deja un valor en la fila y columna indicadas como parámetro
      * asumimos f y c correctos
      */
-    public void setValor(int f, int c, int valor) {
+    private void setValor(int f, int c, int valor) {
+        matriz[f][c] = valor;
+    }
 
+    /**
+     * @return el nº total de filas de la matriz
+     */
+    public int getFilas() {
+        return matriz.length;
+    }
+
+    /**
+     * @return el nº total de columnas de la matriz
+     */
+    public int getColumnas() {
+        return matriz[0].length;
     }
 
     /**
      * Representación textual de la matriz
      */
     public String toString() {
-        return null;
+        String texto = "";
+        for (int i = 0; i < getFilas() ; i++) {
+            for (int j = 0; j <getColumnas() ; j++) {
+                texto += String.format( "%4d", matriz[i][j]);
+            }
+            texto += "\n";
+        }
+        return texto;
     }
 
     /**
@@ -77,15 +97,11 @@ public class Array2D {
      *          suponemos f correcto
      */
     public int sumarFila(int f) {
-        return 0;
-    }
-
-    /**
-     * @param c la columna cuyos valores hay que sumar
-     *          suponemos c correcto
-     */
-    public int sumarColumna(int c) {
-        return 0;
+        int suma = 0;
+        for (int j = 0; j < getColumnas(); j++) {
+            suma+=matriz[f][j];
+        }
+        return suma;
     }
 
     /**
@@ -93,15 +109,36 @@ public class Array2D {
      * cada elemento es la suma de las filas de matriz
      */
     public int[] sumarFilas() {
-        return null;
+        int[] suma = new int[getFilas()];
+        for (int i = 0; i < getFilas(); i++) {
+            suma[i] = sumarFila(i);
+        }
+        return suma;
     }
+
+    /**
+     * @param c la columna cuyos valores hay que sumar
+     *          suponemos c correcto
+     */
+    public int sumarColumna(int c) {
+        int suma = 0;
+        for (int i = 0; i < getFilas(); i++) {
+            suma += matriz[i][c];
+        }
+        return suma;
+    }
+
 
     /**
      * Calcula y devuelve un array en el que
      * cada elemento es la suma de las columnas de matriz
      */
     public int[] sumarColumnas() {
-        return null;
+        int[] columnas = new int [getColumnas()];
+        for (int j = 0; j < getColumnas(); j++) {
+            columnas[j] = sumarColumna(j);
+        }
+        return columnas;
     }
 
     /**
@@ -109,7 +146,23 @@ public class Array2D {
      * matriz cuadrada)
      */
     public int sumarDiagonalPrincipal() {
-        return 0;
+        int suma = 0;
+        for (int i = 0; i < matriz.length; i++) {
+            for (int j = 0; j < matriz.length; j++) {
+                if (i==j){
+                    suma += matriz[i][j];
+                }
+            }
+        }
+        return suma;
+    }
+
+    public int sumarDiagonalPrincipal2() {
+        int suma = 0;
+        for (int i = 0; i < matriz.length; i++) {
+            suma += matriz[i][i];
+        }
+        return suma;
     }
 
     /**
@@ -117,7 +170,11 @@ public class Array2D {
      * matriz cuadrada)
      */
     public int sumarDiagonalSecundaria() {
-        return 0;
+        int suma = 0;
+        for (int i = 0; i < getFilas(); i++) {
+            suma += matriz[i][getColumnas()-1-i];
+        }
+        return suma;
     }
 
     /**
@@ -131,7 +188,13 @@ public class Array2D {
      * 44  11   9
      */
     public int[][] traspuesta() {
-        return null;
+        int[][] traspuesta = new int[getColumnas()][getFilas()];
+        for (int i = 0; i < getFilas(); i++) {
+            for (int j = 0; j < getColumnas() ; j++) {
+                traspuesta[j][i]= matriz[i][j];
+            }
+        }
+        return traspuesta;
     }
 
     /**
@@ -139,7 +202,15 @@ public class Array2D {
      * Puedes ayudarte del método sumarColumna()
      */
     public int columnaSumaMaxima() {
-        return 0;
+        int maximo = 0;
+        int posicion = 0;
+        for (int j = 0; j < getColumnas(); j++) {
+            if (sumarColumna(j) > maximo){
+                maximo = sumarColumna(j);
+                posicion = j;
+            }
+        }
+        return posicion;
     }
 
     /**
@@ -147,8 +218,28 @@ public class Array2D {
      * Si son la misma no hace falta el intercambio
      */
     public void intercambiar() {
-
+        int colMaxima = columnaSumaMaxima();
+        if (colMaxima != 0){
+            for (int i = 0; i < matriz.length; i++) {
+                int aux = matriz[i][0];
+                matriz[i][0] = matriz[i][colMaxima];
+                matriz[i][colMaxima] = aux;
+            }
+        }
     }
+
+
+//    public void intercambiar() {
+//        int[] aux = new int[getFilas()];
+//        int colMaxima = columnaSumaMaxima();
+//        if (colMaxima != 0){
+//            for (int i = 0; i < this.matriz.length; i++) {
+//                aux[i] = this.matriz[i][0];
+//                this.matriz[i][0] = this.matriz[i][colMaxima];
+//                this.matriz[i][colMaxima] = aux[i];
+//            }
+//        }
+//    }
 
     /**
      * Devuelve un ragged array donde la 1ª fila
@@ -187,14 +278,24 @@ public class Array2D {
      * Hay que hacer uso del método contarImpares(int[], int n)
      */
     public int contarImpares() {
-        return 0;
+        int impares = 0;
+        for (int i = 0; i < getFilas(); i++) {
+            impares += contarImpares(matriz[i]);
+        }
+        return impares;
     }
 
     /**
      * Cuenta los impares en el array unidimensional array
      */
     private int contarImpares(int[] array) {
-        return 0;
+        int impares = 0;
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] % 2 != 0) {
+                impares++;
+            }
+        }
+        return impares;
     }
 
     /**
@@ -212,7 +313,29 @@ public class Array2D {
      * [20, 25]
      */
     public int[][] obtenerSubArray(int fila1, int fila2, int col1, int col2) {
-        return null;
+        int[][] sub = new int[fila2 - fila1 + 1][col2 - col1 + 1];
+        int fila = 0;
+        int columna = 0;
+
+        for (int i = fila1; i <= fila2; i++) {
+            for (int j = col1; j <= col2; j++) {
+                sub[fila][columna] = matriz[i][j];
+                columna++;
+            }
+            fila++;
+            columna = 0;
+        }
+        return sub;
+    }
+
+    public int[][] obtenerSubArray2(int fila1, int fila2, int col1, int col2) {
+        int[][] subarray = new int[(fila2 - fila1) + 1][(col2 - col1) + 1];
+        for (int i = 0; i < subarray.length; i++) {
+            for (int j = 0; j < subarray[0].length; j++) {
+                subarray[i][j] = matriz[fila1 + i][col1 + j];
+            }
+        }
+        return subarray;
     }
 
 
