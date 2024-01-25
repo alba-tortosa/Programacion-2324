@@ -12,36 +12,41 @@ public class MapaTesoro {
     private static final char PUNTO = '.';
     private Random generador;
 
+    private boolean[][] mapa;
+
     /**
      * construye el mapa de las dimensiones indicadas
      * y lo inicializa a valores boolean aleatorios
      */
     public MapaTesoro(int filas, int columnas) {
-
-
+        mapa = new boolean[filas][columnas];
+        generador = new Random();
+        inicializar();
     }
 
     /**
      * inicializa el array mapa a valores aleatorios true / false
      */
     private void inicializar() {
-
+        for (int i = 0; i < getFilas(); i++) {
+            for (int j = 0; j < getColumnas(); j++) {
+                mapa[i][j] = generador.nextBoolean();
+            }
+        }
     }
 
     /**
      * @return el numero de filas del mapa
      */
     public int getFilas() {
-        return 0;
-
+        return mapa.length;
     }
 
     /**
      * @return el numero de columnas del mapa
      */
     public int getColumnas() {
-        return 0;
-
+        return mapa[0].length;
     }
 
 
@@ -50,7 +55,19 @@ public class MapaTesoro {
      * (leer enunciado)
      */
     public String toString() {
-        return null;
+        String texto = "";
+        for (int i = 0; i < getFilas(); i++) {
+            for (int j = 0; j < getColumnas(); j++) {
+//                String aux = ".";
+//                if(hayTesoro(i, j)) {
+//                    aux = "$";
+//                }
+                char aux = hayTesoro(i, j) ? CARACTER : PUNTO;
+                texto += String.format(" %2s ",aux);
+            }
+            texto += "\n";
+        }
+        return texto;
     }
 
 
@@ -58,11 +75,20 @@ public class MapaTesoro {
      * devuelve true si en la posicion indicada hay un tesoro
      * false si la posicion (f,c) no esta dentro de los limites del mapa
      * o no hay un tesoro en esa posicion
-     * <p>
      * Para saber si una posicion esta dentro de los limites
      * del mapa del tesoro se usara dentroLimites()
      */
     public boolean hayTesoro(int f, int c) {
+        return dentroLimites(f, c) ? mapa[f][c] : false;
+    }
+
+    public boolean hayTesoro2(int f, int c) {
+        return dentroLimites(f, c) && mapa[f][c];
+        //return mapa[f][c] && dentroLimites(f, c); // ERROR
+    }
+
+    public boolean hayTesoro3(int f, int c) {
+        if (dentroLimites(f, c)) return mapa[f][c];
         return false;
     }
 
@@ -70,7 +96,14 @@ public class MapaTesoro {
      * devuelve true si f,c esta dentro de los limites, false en otro caso
      */
     private boolean dentroLimites(int f, int c) {
-        return false;
+//        if (f >= getFilas() || f<0 || c<0 || c >= getColumnas() ) {
+//            return false;
+//        }
+//        return true;
+
+//        return !(f >= getFilas() || f<0 || c<0 || c >= getColumnas() );
+
+        return f < getFilas() && f >= 0 && c >= 0 && c < getColumnas();
     }
 
     /**
@@ -81,8 +114,44 @@ public class MapaTesoro {
      * El numero de tesoros adyacentes en una posicion fuera de los limites es 0.
      */
     public int calcularNumeroTesorosAdyacentes(int f, int c) {
-        return 0;
+        int numTesoros = 0;
+        if(dentroLimites(f,c)) {
+            for (int i = f - 1; i <= f + 1; i++) {
+                for (int j = c - 1; j <= c + 1; j++) {
+                    //if (hayTesoro(i,j) && !(i==f && j ==c)) {
+                    if (hayTesoro(i,j) && (i!=f || j != c)) {
+                        numTesoros++;
+                    }
+                }
+            }
+        }
+        return numTesoros;
     }
+
+    public int calcularNumeroTesorosAdyacentes2(int f, int c) {
+        int cont = 0;
+        if (dentroLimites(f, c)) {
+            if (hayTesoro(f - 1, c)) {
+                cont++;
+            } else if (hayTesoro(f + 1, c)) {
+                cont++;
+            } else if (hayTesoro(f, c + 1)) {
+                cont++;
+            } else if (hayTesoro(f, c - 1)) {
+                cont++;
+            } else if (hayTesoro(f - 1, c + 1)) {
+                cont++;
+            } else if (hayTesoro(f - 1, c - 1)) {
+                cont++;
+            } else if (hayTesoro(f + 1, c - 1)) {
+                cont++;
+            } else if (hayTesoro(f + 1, c + 1)) {
+                cont++;
+            }
+        }
+        return cont;
+    }
+
 
     /**
      * Crea y devuelve un array bidimensional de enteros
@@ -92,7 +161,18 @@ public class MapaTesoro {
      * a la posicion f,c
      */
     public int[][] calcularTesoros() {
-        return null;
+        int[][] matriz = new int[getFilas()][getColumnas()];
+
+        for (int i = 0; i < getFilas(); i++) {
+            for (int j = 0; j < getColumnas(); j++) {
+                if (mapa[i][j]) {
+                    matriz[i][j] = 9;
+                } else {
+                    matriz[i][j] = calcularNumeroTesorosAdyacentes(i,j);
+                }
+            }
+        }
+        return matriz;
     }
 
 }
