@@ -1,16 +1,16 @@
 package AD01_Urna;
 
+import java.util.Scanner;
+
 /**
  *
  */
 
 public class TestUrna {
     public static void main(String[] args) {
-        if (args.length != 1) {
-            System.out.println("Numero incorrecto de parametros\nUsage: java TestUrna <n>");
-            return;
-        }
-        int cuantasBolas = Integer.parseInt(args[0]);
+        Scanner scanner =  new Scanner(System.in);
+        System.out.println("¿cuántas bolas habrá en la urna?");
+        int cuantasBolas = scanner.nextInt();
         Urna urna = new Urna();
         for (int i = 1; i <= cuantasBolas; i++) {
             urna.meterBola(new Bola());
