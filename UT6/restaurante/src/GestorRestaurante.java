@@ -3,6 +3,7 @@
  * para interactuar con el usaurio
  */
 
+import java.time.LocalDate;
 import java.util.Scanner;
 
 
@@ -57,13 +58,14 @@ public class GestorRestaurante {
      * Reserva de una mesa
      */
     private void reservar() {
-        String id;
-        int comensales=0;
         System.out.println("Introduzca el Nombre para la reserva de la mesa ");
-        id=teclado.next();
+        String nombre=teclado.next();
         System.out.println("Introduzca la cantidad de comensales ");
-        comensales=teclado.nextInt();
-        boolean exito = r.reservarMesa(id,comensales);
+        int comensales=teclado.nextInt();
+        System.out.println("¿Para que fecha quiere la reserva? YYYY-MM-DD");
+        String fecha = teclado.next();
+        LocalDate date = LocalDate.parse(fecha);
+        boolean exito = r.reservarMesa(nombre,comensales, date);
         System.out.println(exito ? "Su reserva ha sido realizada" : "No ha sitio" );
     }
 

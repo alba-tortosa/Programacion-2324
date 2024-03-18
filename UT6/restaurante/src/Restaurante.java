@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -59,13 +60,14 @@ public class Restaurante {
      * @param comensales el nº de comensales
      * @return true si se ha podido efectuar la reserva
      */
-    public boolean reservarMesa(String nombre, int comensales) {
-        int posibleMesa = asignarMesa(comensales);
+    public boolean reservarMesa(String nombre, int comensales, LocalDate fecha) {
+        int posibleMesa = asignarMesa(comensales, fecha);
         if (posibleMesa != -1) {
-            this.reservas.add(new Reserva(nombre, comensales, posibleMesa));
+            Reserva reserva = new Reserva(nombre, comensales, posibleMesa, fecha);
+            this.reservas.add(reserva);
             for (Mesa mesa : mesas) {
                 if (mesa.getId().equals(String.valueOf(posibleMesa)))
-                    mesa.setLibre(false);
+                    mesa.addReserva(reserva);
             }
             return true;
         }
@@ -85,29 +87,13 @@ public class Restaurante {
      * @param comensales el nº de personas que irán a comer
      * @return -1 si no hay mesa posible
      */
-    private int asignarMesaV2(int comensales) {
-        Iterator<Mesa> it = this.mesas.iterator();
-        int numMesa = -1;
-        Mesa mesaActual = mesas.get(0);
-        while (it.hasNext()) {
-            Mesa mesa = it.next();
-            if (mesa.estaLibre() && mesa.getCapacidad() >= comensales) {
-                if (mesa.getCapacidad() < mesaActual.getCapacidad()) {
-                    numMesa = Integer.valueOf(mesa.getId());
-                    mesaActual = mesa;
-                }
-            }
-        }
-        return numMesa;
-    }
-
-    private int asignarMesa(int comensales) {
+    private int asignarMesa(int comensales, LocalDate fecha) {
         Iterator<Mesa> it = this.mesas.iterator();
         int numMesa = -1;
         int capacidadMinima = Integer.MAX_VALUE;
         while (it.hasNext()) {
             Mesa mesa = it.next();
-            if (mesa.estaLibre() && mesa.getCapacidad() >= comensales) {
+            if (mesa.estaLibre(fecha) && mesa.getCapacidad() >= comensales) {
                 if (mesa.getCapacidad() < capacidadMinima) {
                     numMesa = Integer.valueOf(mesa.getId());
                     capacidadMinima = mesa.getCapacidad();
@@ -115,6 +101,14 @@ public class Restaurante {
             }
         }
         return numMesa;
+    }
+
+    private boolean mesaLibre(String mesa, LocalDate fecha) {
+        for (Reserva reserva : reservas) {
+            if (reserva.getMesaAsignada() == Integer.valueOf(mesa) && reserva.getFecha().equals(fecha))
+                return false;
+        }
+        return true;
     }
 
     /**
@@ -175,7 +169,7 @@ public class Restaurante {
      */
     private void actualizarMesas() {
         for (Mesa mesa : mesas) {
-            mesa.setLibre(true);
+            mesa.eliminarReservas();
         }
     }
 

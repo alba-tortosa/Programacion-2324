@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+
 /**
  * Modela una reserva realizada en el restaurante
  */
@@ -7,6 +9,9 @@ public class Reserva implements Comparable {
         private int comensales;
         private int mesa;
 
+        private LocalDate fecha;
+
+
     /**
      * Constructor de la clase Reserva
      *
@@ -14,10 +19,11 @@ public class Reserva implements Comparable {
      * @param comensales numero de personas que van a comer
      * @param mesa       la mesa que se les ha asignado
      */
-    public Reserva(String quien, int comensales, int mesa) {
+    public Reserva(String quien, int comensales, int mesa, LocalDate fecha) {
         this.quienReserva = quien;
         this.comensales = comensales;
         this.mesa = mesa;
+        this.fecha = fecha;
     }
 
     /**
@@ -47,6 +53,10 @@ public class Reserva implements Comparable {
         return mesa;
     }
 
+    public LocalDate getFecha() {
+        return fecha;
+    }
+
     /**
      * Rerepsentacion textual de la reserva
      *
@@ -60,10 +70,12 @@ public class Reserva implements Comparable {
     @Override
     public int compareTo(Object o) {
         Reserva otra = (Reserva) o;
-        int devolver=0;
-        if (this.mesa>otra.mesa) devolver= 1;
-        else if (this.mesa<otra.mesa) devolver= -1;
-        else devolver= 0;
-        return devolver;
+        if (this.fecha.isAfter(otra.getFecha())) return 1;
+        else if (this.fecha.isEqual(otra.getFecha())) {
+            if (this.mesa == otra.mesa) return 0;
+            else if (this.mesa > otra.mesa) return 1;
+            else return -1;
+        }
+        else return -1;
     }
 }

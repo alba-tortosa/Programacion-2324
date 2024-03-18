@@ -1,12 +1,16 @@
+import java.time.LocalDate;
+import java.util.ArrayList;
+
 /**
- * Clase Mesa - decribe las características de la
+ * Clase Mesa - decribe las caracterï¿½sticas de la
  * mesa del restaurante
  */
 public class Mesa {
 
     private String id;
     private int capacidad;
-    private boolean libre;
+//    private boolean libre;
+    ArrayList<Reserva> reservas;
 
     /**
      * Constructor de la clase Mesa
@@ -18,7 +22,8 @@ public class Mesa {
         this.id = String.valueOf(i);
 //        this.id = "" + i;
         this.capacidad = cap;
-        this.libre = true;
+//        this.libre = true;
+        reservas = new ArrayList<>();
     }
 
     /**
@@ -39,29 +44,26 @@ public class Mesa {
         return capacidad;
     }
 
-    /**
-     * Indica si está o no libre la mesa
-     *
-     * @return si la mesa está libre
-     */
-    public boolean estaLibre() {
-        return libre;
+    public void addReserva(Reserva r) {
+        reservas.add(r);
+    }
+
+    public boolean estaLibre(LocalDate fecha) {
+        for (Reserva reserva : reservas) {
+            if (reserva.getFecha().equals(fecha)) return false;
+        }
+        return true;
+    }
+
+    public void eliminarReservas() {
+        reservas.clear();
     }
 
     /**
-     * Modifica el estado de la mesa
-     *
-     * @param l el nuevo estado
-     */
-    public void setLibre(boolean l) {
-        this.libre = l;
-    }
-
-    /**
-     * Representación textual de la mesa
+     * Representaciï¿½n textual de la mesa
      *
      */
     public String toString() {
-        return "Mesa: " + id + "\t" + "Capacidad: " + capacidad + "\t" + "Libre: " + libre + "\n";
+        return "Mesa: " + id + "\t" + "Capacidad: " + capacidad + "\t" + "\n";
     }
 }
