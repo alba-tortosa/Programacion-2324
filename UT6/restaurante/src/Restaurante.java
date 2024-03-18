@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.Random;
 
@@ -62,6 +63,10 @@ public class Restaurante {
         int posibleMesa = asignarMesa(comensales);
         if (posibleMesa != -1) {
             this.reservas.add(new Reserva(nombre, comensales, posibleMesa));
+            for (Mesa mesa : mesas) {
+                if (mesa.getId().equals(String.valueOf(posibleMesa)))
+                    mesa.setLibre(false);
+            }
             return true;
         }
         return false;
@@ -80,7 +85,7 @@ public class Restaurante {
      * @param comensales el nº de personas que irán a comer
      * @return -1 si no hay mesa posible
      */
-    private int asignarMesa(int comensales) {
+    private int asignarMesaV2(int comensales) {
         Iterator<Mesa> it = this.mesas.iterator();
         int numMesa = -1;
         Mesa mesaActual = mesas.get(0);
@@ -96,7 +101,7 @@ public class Restaurante {
         return numMesa;
     }
 
-    private int asignarMesaV2(int comensales) {
+    private int asignarMesa(int comensales) {
         Iterator<Mesa> it = this.mesas.iterator();
         int numMesa = -1;
         int capacidadMinima = Integer.MAX_VALUE;
@@ -125,7 +130,17 @@ public class Restaurante {
      * @return la cadena que representa las reservas efectuadas
      */
     public String reservasToString() {
-        return reservas.toString();
+//        return reservas.toString();
+
+        String result="";
+        Collections.sort(this.reservas);
+        Iterator<Reserva> it = this.reservas.iterator();
+        while (it.hasNext()) {
+            Reserva reserva = it.next();
+            result += String.format("Nombre: %15s | Comensales: %2d | Mesa: %2d \n", reserva.getNombre(), reserva.getComensales(), reserva.getMesaAsignada());
+            result += String.format("********************************************\n");
+        }
+        return result;
     }
 
     /**

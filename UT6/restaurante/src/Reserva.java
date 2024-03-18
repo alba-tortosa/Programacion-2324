@@ -1,7 +1,7 @@
 /**
  * Modela una reserva realizada en el restaurante
  */
-public class Reserva {
+public class Reserva implements Comparable {
 
         private String quienReserva;
         private int comensales;
@@ -55,5 +55,15 @@ public class Reserva {
     public String toString() {
         return "Nombre: " + quienReserva + "\n" + "Comensales: " + comensales + "\n" + "Mesa asignada: " + mesa + "\n";
 
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Reserva otra = (Reserva) o;
+        int devolver=0;
+        if (this.mesa>otra.mesa) devolver= 1;
+        else if (this.mesa<otra.mesa) devolver= -1;
+        else devolver= 0;
+        return devolver;
     }
 }

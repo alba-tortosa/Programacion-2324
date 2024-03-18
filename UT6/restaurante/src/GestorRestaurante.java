@@ -25,7 +25,6 @@ public class GestorRestaurante {
     public GestorRestaurante(Restaurante r) {
         this.r = r;
         teclado = new Scanner(System.in);
-
     }
 
     /**
@@ -58,28 +57,35 @@ public class GestorRestaurante {
      * Reserva de una mesa
      */
     private void reservar() {
-
+        String id;
+        int comensales=0;
+        System.out.println("Introduzca el Nombre para la reserva de la mesa ");
+        id=teclado.next();
+        System.out.println("Introduzca la cantidad de comensales ");
+        comensales=teclado.nextInt();
+        boolean exito = r.reservarMesa(id,comensales);
+        System.out.println(exito ? "Su reserva ha sido realizada" : "No ha sitio" );
     }
 
     /**
      * Mostrar reservas efectuadas
      */
     private void listarReservas() {
-
+        r.mostrarReservas();
     }
 
     /**
-     * Elimiar todas las reservas
+     * Eliminar todas las reservas
      */
     private void eliminarReservas() {
-
+        r.eliminarReservas();
     }
 
     /**
      * Visualizar el esatdo del restaurante
      */
     private void mostrarRestaurante() {
-
+        r.mostrarRestaurante();
     }
 
     /**
