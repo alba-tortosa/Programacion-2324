@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * Modela una reserva realizada en el restaurante
@@ -77,5 +78,18 @@ public class Reserva implements Comparable {
             else return -1;
         }
         else return -1;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Reserva reserva = (Reserva) o;
+        return mesa == reserva.mesa && Objects.equals(fecha, reserva.fecha);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(mesa, fecha);
     }
 }
