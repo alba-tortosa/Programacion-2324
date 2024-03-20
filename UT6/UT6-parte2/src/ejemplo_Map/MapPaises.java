@@ -1,6 +1,6 @@
 package ejemplo_Map;
 
-import java.util.Collection;
+import java.util.*;
 
 /**
  * Una colección HashMap que asocia países con sus capitales
@@ -8,13 +8,13 @@ import java.util.Collection;
 
 public class MapPaises {
 
-    // private mapPaises;
+    private HashMap<String, String> mapPaises;
 
     /**
      * Constructor
      */
     public MapPaises() {
-
+        this.mapPaises = new HashMap<>();
     }
 
     /**
@@ -22,35 +22,35 @@ public class MapPaises {
      * valor asociado la capital
      */
     public void addPais(String pais, String capital) {
-
+        this.mapPaises.put(pais, capital);
     }
 
     /**
      * Dado un país obtener su capital
      */
     public String capitalDe(String pais) {
-        return null;
+        return this.mapPaises.get(pais);
     }
 
     /**
      * detecta si existe o no una clave en el map
      */
     public boolean estaPais(String pais) {
-        return false;
+        return this.mapPaises.containsKey(pais);
     }
 
     /**
      * Dado un país elimina la entrada correspondiente a esa clave
      */
     public void borrarPais(String pais) {
-
+        this.mapPaises.remove(pais);
     }
 
     /**
      * detecta si existe o no un valor en el map
      */
     public boolean estaCapital(String capital) {
-        return false;
+        return this.mapPaises.containsValue(capital);
     }
 
 
@@ -58,7 +58,7 @@ public class MapPaises {
      * nº de elementos del map
      */
     public int totalPaises() {
-        return 0;
+        return this.mapPaises.size();
     }
 
     /**
@@ -67,7 +67,10 @@ public class MapPaises {
      * Con for mejorado
      */
     public void mostrarPaisesV1() {
-
+        Set<String> keys = this.mapPaises.keySet();
+        for (String key : keys) {
+            System.out.println(key + " " + this.mapPaises.get(key));
+        }
     }
 
     /**
@@ -76,7 +79,12 @@ public class MapPaises {
      * Con iterador
      */
     public void mostrarPaisesV2() {
-
+        Set<String> keys = this.mapPaises.keySet();
+        Iterator it = keys.iterator();
+        while (it.hasNext()) {
+            String key = (String) it.next();
+            System.out.println(key + " " + this.mapPaises.get(key));
+        }
     }
 
     /**
@@ -85,7 +93,10 @@ public class MapPaises {
      * Con for mejorado
      */
     public void mostrarPaisesV3() {
-
+        Set<Map.Entry<String, String>> entries = this.mapPaises.entrySet();
+        for (Map.Entry<String, String> entry : entries) {
+            System.out.println(entry.getKey() + " " + entry.getValue());
+        }
     }
 
     /**
@@ -101,6 +112,6 @@ public class MapPaises {
      * Devuelve la colección de capitales presentes en el map
      */
     public Collection<String> grupoCapitales() {
-        return null;
+        return this.mapPaises.values();
     }
 }
