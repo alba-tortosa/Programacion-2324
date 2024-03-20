@@ -8,9 +8,7 @@ package AD05_ListaNombres;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.Scanner;
+import java.util.*;
 
 public class ListaNombres {
 
@@ -30,7 +28,8 @@ public class ListaNombres {
      *
      */
     public void anyadirNombre(String nombre) {
-
+        lista.add(nombre);
+        Collections.sort(lista);
     }
 
     /**
@@ -46,26 +45,26 @@ public class ListaNombres {
      * @throws IllegalArgumentException si el argumento recibido es incorrecto
      *
      */
-//    public obtenerConjuntoDeCaracteres(int pos) {
-//
-//    }
+    public TreeSet<Character> obtenerConjuntoDeCaracteres(int pos) {
+        return UtilsString.getConjuntoCaracteres(lista.get(pos));
+    }
 
     /**
      * Obtiene y devuelve el conjunto de digitos numericos del nombre de la posicion indicada
      * @throws IllegalArgumentException si el argumento recibido es incorrecto
      *
      */
-//    public obtenerConjuntoDeDigitos(int pos) {
-//
-//    }
+    public HashSet<Character> obtenerConjuntoDeDigitos(int pos) {
+        return UtilsString.getConjuntoDigitos(lista.get(pos));
+    }
 
     /**
      * Obtiene y devuelve el conjunto de letras mayusculas del nombre de la posicion indicada
      * @throws IllegalArgumentException si el argumento recibido es incorrecto
      *
      */
-    public LinkedHashSet<Character> obtenerConjuntoMayusculas(int pos) {
-        return null;
+    public LinkedHashSet<String> obtenerConjuntoMayusculas(int pos) {
+        return UtilsString.getConjuntoMayusculas(lista.get(pos));
     }
 
 
@@ -74,7 +73,12 @@ public class ListaNombres {
      * de la forma          Nombre  [conjunto de caracteres ]  [conjunto digitos]  [conjunt de letras mayusculas]
      */
     public String toString() {
-        return null;
+        String tabla = "";
+        tabla+=String.format("| %-15s | %-30s | %-10s | %-20s |%n", "Nombre", "Caracteres", "Dígitos", "Mayúsculas");
+        for (int i = 0; i < lista.size(); i++) {
+            tabla+=String.format("| %-15s | %-30s | %-10s | %-20s |%n", lista.get(i), obtenerConjuntoDeCaracteres(i), obtenerConjuntoDeDigitos(i), obtenerConjuntoMayusculas(i));
+        }
+        return tabla;
     }
 
     /**
@@ -91,7 +95,7 @@ public class ListaNombres {
      */
     public void leerDeFichero() {
         try {
-            Scanner sc = new Scanner(new File("./nombres.txt"));
+            Scanner sc = new Scanner(new File("src/AD05_ListaNombres/nombres.txt"));
             while (sc.hasNextLine()) {
                 anyadirNombre(sc.nextLine());
             } sc.close();
