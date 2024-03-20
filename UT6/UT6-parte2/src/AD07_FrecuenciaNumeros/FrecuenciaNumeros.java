@@ -8,16 +8,19 @@ package AD07_FrecuenciaNumeros;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Scanner;
+import java.util.Set;
 
 public class FrecuenciaNumeros {
 
+    private HashMap<String, Contador> frecuencias;
 
     /**
      * Constructor de la clase FrecuenciaNumeros
      */
     public FrecuenciaNumeros() {
-
+        frecuencias = new HashMap<>();
     }
 
     /**
@@ -26,7 +29,20 @@ public class FrecuenciaNumeros {
      * @param  numero el numero a añadir
      */
     public void anyadirNumero(int numero) {
+        String key = String.valueOf(numero);
+        if (!frecuencias.containsKey(key)){
+            frecuencias.put(key, new Contador());
+        }
+        frecuencias.get(key).incrementar();
+    }
 
+    public void anyadirNumeroV2(int numero) {
+        String key = String.valueOf(numero);
+        if (!frecuencias.containsKey(key)){
+            frecuencias.put(key, new Contador(1));
+        } else {
+            frecuencias.get(key).incrementar();
+        }
     }
 
 
@@ -37,7 +53,7 @@ public class FrecuenciaNumeros {
      */
     public void cargarDeFichero() {
         try {
-            Scanner sc = new Scanner(new File("numeros.txt"));
+            Scanner sc = new Scanner(new File("src/AD07_FrecuenciaNumeros/numeros.txt"));
             while (sc.hasNext()) {
                 anyadirNumero(sc.nextInt());
             } sc.close();
@@ -52,7 +68,11 @@ public class FrecuenciaNumeros {
      * Se utiliza Map.Entry
      */
     public void listarFrecuencias() {
-
+        System.out.printf("| %-10s | %-30s\n", "Número", "Frecuencia");
+        Set<String> lista = this.frecuencias.keySet();
+        for (String key : lista) {
+            System.out.printf("| %-10s | %-30s\n", key, this.frecuencias.get(key));
+        }
     }
 
     /**
@@ -64,7 +84,10 @@ public class FrecuenciaNumeros {
      * y un for each
      */
     public void listarNumeros() {
-
+        System.out.println("Numeros aparecidos "+ frecuencias.size());
+        for (String s : frecuencias.keySet()) {
+            System.out.print(s +"  ");
+        }
     }
 
 }
