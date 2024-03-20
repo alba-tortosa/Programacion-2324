@@ -1,6 +1,6 @@
 package AD06_SerieMultiplos;
 
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  * Multimap - Un objeto de esta clase guarda
@@ -11,20 +11,20 @@ import java.util.ArrayList;
 
 public class SerieMultiplos {
 
-//    private mapMultiplos;
+    private HashMap<Integer, ArrayList<Integer>> mapMultiplos;
 
     /**
      * Constructor de la clase SeriePotencias
      */
     public SerieMultiplos() {
-
+        mapMultiplos = new HashMap<>();
     }
 
     /**
      * @param num el numero que sera la clave String
      */
     public void anyadirEntrada(int num) {
-
+        mapMultiplos.put(num, generarMultiplos(num));
     }
 
     /**
@@ -32,7 +32,11 @@ public class SerieMultiplos {
      * @return una coleccion ArrayLIst con los multiplos generados
      */
     private ArrayList<Integer> generarMultiplos(int num) {
-        return null;
+        ArrayList<Integer> multiplos = new ArrayList<>();
+        for (int i = 1; i <= 10; i++) {
+            multiplos.add(num * i);
+        }
+        return multiplos;
     }
 
     /**
@@ -40,7 +44,7 @@ public class SerieMultiplos {
      * @return la coleccion asociada en el map
      */
     public ArrayList<Integer> obtenerMultiplosDe(int num) {
-        return null;
+        return mapMultiplos.get(num);
     }
 
 
@@ -48,15 +52,11 @@ public class SerieMultiplos {
      * Visualiza el map (claves y valores asociados)
      */
     public void escribirMap() {
-
-    }
-
-
-    /**
-     * Metodo privado de ayuda que visualiz aun ArrayList
-     */
-    private void escribirValor(ArrayList<Integer> lista) {
-
+        System.out.printf("| %-10s | %-30s\n", "Clave", "Multiplos");
+        Set<Integer> lista = this.mapMultiplos.keySet();
+        for (int key : lista) {
+            System.out.printf("| %-10s | %-30s\n", key, this.mapMultiplos.get(key));
+        }
     }
 
     /**
@@ -65,7 +65,20 @@ public class SerieMultiplos {
      * Con Map.Entry y un iterador
      */
     public int borrarMultiplo(int multi) {
-        return 0;
+        int cont = 0;
+        ArrayList<Integer> nuevosMultiplos;
+        Set<Map.Entry < Integer, ArrayList<Integer>>> entries = this.mapMultiplos.entrySet();
+        for (Map.Entry < Integer, ArrayList<Integer>> entry : entries) {
+            nuevosMultiplos = entry.getValue();
+            Iterator<Integer> it = nuevosMultiplos.iterator();
+            while (it.hasNext()){
+                if (it.next() == multi){
+                    it.remove();
+                    cont ++;
+                }
+            }
+        }
+        return cont;
     }
 
 }
