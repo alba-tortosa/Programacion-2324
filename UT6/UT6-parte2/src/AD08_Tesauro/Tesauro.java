@@ -1,6 +1,9 @@
 package AD08_Tesauro;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 /**
  * Modela un diccionario en el que cada palabra
@@ -11,13 +14,13 @@ import java.util.HashSet;
 public class Tesauro {
     // a cada clave se le asocia un conjunto de sinonimos
     //los sinonimos no se repiten
-//    private tesauro;
+    private HashMap<String, HashSet<String>> tesauro;
 
     /**
      * Constructor de la clase Tesauro
      */
     public Tesauro() {
-//        tesauro =
+        tesauro = new HashMap<>();
     }
 
     /**
@@ -25,7 +28,20 @@ public class Tesauro {
      * sinonimo el sinonimo de la palabra
      */
     public void anyadirSinonimo(String palabra, String sinonimo) {
+        if (tesauro.containsKey(palabra)) {
+            tesauro.get(palabra).add(sinonimo);
+        } else {
+            HashSet<String> sinonimos = new HashSet<>();
+            sinonimos.add(sinonimo);
+            tesauro.put(palabra, sinonimos);
+        }
+    }
 
+    public void anyadirSinonimoV2(String palabra, String sinonimo) {
+        if (!tesauro.containsKey(palabra)) {
+            tesauro.put(palabra, new HashSet<>());
+        }
+        tesauro.get(palabra).add(sinonimo);
     }
 
     /**
@@ -36,7 +52,11 @@ public class Tesauro {
      * la primera palabra es la clave, el resto sinonimos
      */
     public void anyadirSinonimo(String linea) {
-
+        // El split divide la línea en palabras.
+        String[] palabras = linea.split(" ");
+        for (int i = 1; i < palabras.length; i++) {
+            anyadirSinonimo(palabras[0], palabras[i]);
+        }
     }
 
     /**
@@ -47,14 +67,35 @@ public class Tesauro {
      * ninguno devuelve el conjunto vacio
      */
     public HashSet<String> borrarSinonimo(String sin) {
-        return null;
+        HashSet<String> borrados = new HashSet<>();
+        Set<String> keys = tesauro.keySet();
+        Iterator<String> it = keys.iterator();
+        while (it.hasNext()) {
+            String key = it.next();
+            HashSet<String> sinonimosKeys = tesauro.get(key);
+            Iterator<String> it2 = sinonimosKeys.iterator();
+            while (it2.hasNext()) {
+                String sinonimo = it2.next();
+                if(sinonimo.equalsIgnoreCase(sin)){
+                    it2.remove();
+                    borrados.add(sinonimo);
+                }
+            }
+        }
+        return borrados;
     }
 
     /**
      * @return
      */
     public String toString() {
-        return null;
+        String texto = "";
+        texto += String.format("%-15s %-50s", "PALABRA", "SINONIMOS");
+        for (String key : tesauro.keySet()) {
+            texto += "\n";
+            texto += String.format("%-15s %-50s", key, tesauro.get(key));
+        }
+        return texto;
     }
 
     /**

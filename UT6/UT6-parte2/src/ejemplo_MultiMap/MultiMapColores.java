@@ -11,14 +11,14 @@ import java.util.TreeSet;
 
 public class MultiMapColores {
 
-    private mapPersonas;
+//    private mapPersonas;
 
     /**
      * Constructor
      */
-    public MultiMapColores() {
-        mapPersonas =
-    }
+//    public MultiMapColores() {
+//        mapPersonas =
+//    }
 
     /**
      * Añade una nueva persona al map con su color favorito
@@ -29,17 +29,6 @@ public class MultiMapColores {
     public void addPersona(String nombre, String color) {
 
     }
-
-    /**
-     * Añade una nueva persona al map con su color favorito
-     * Si la persona (clave) no exite se crea una nueva entrada con
-     * un conjunto vacío y se añade el color al conjunto
-     * Si la persona  (clave) existe se añade el color
-     */
-    public void addPersonaV2(String nombre, String color) {
-
-    }
-
 
     /**
      * Muestra el nombre de cada persona y sus colores favoritos
